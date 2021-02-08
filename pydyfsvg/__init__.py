@@ -343,15 +343,6 @@ TAGS = {
 }
 
 
-def normalize(string):
-    """Normalize a string corresponding to an array of various values."""
-    string = string.replace('E', 'e')
-    string = re.sub('(?<!e)-', ' -', string)
-    string = re.sub('[ \n\r\t,]+', ' ', string)
-    string = re.sub(r'(\.[0-9-]+)(?=\.)', r'\1 ', string)
-    return string.strip()
-
-
 def size(string, font_size=None, percentage_reference=None):
     if not string:
         return 0
