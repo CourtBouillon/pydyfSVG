@@ -1,6 +1,6 @@
 import re
 from xml.etree import ElementTree
-from .color import color
+from .colors import color
 
 
 INVISIBLE_TAGS = (
