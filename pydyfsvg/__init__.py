@@ -68,6 +68,8 @@ def fill_stroke(svg, node, font_size):
         line_join = 1 if line_join == 'round' else 2
     if line_join == 'miter':
         line_join = 0
+    if miter_limit < 0:
+        miter_limit = 4
     svg.stream.set_line_cap(line_cap)
     svg.stream.set_line_join(line_join)
     svg.stream.set_miter_limit(miter_limit)
