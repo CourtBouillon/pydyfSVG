@@ -39,6 +39,7 @@ def fill_stroke(svg, node, font_size):
     stroke_width = node.get('stroke-width', '1px')
     dash_array = normalize(node.get('stroke-dasharray', '')).split()
     offset = size(node.get('stroke-dashoffset', 0))
+
     if stroke:
         stroke_color = color(stroke)[0:-1]
         svg.stream.set_color_rgb(*stroke_color, stroke=True)
@@ -47,7 +48,8 @@ def fill_stroke(svg, node, font_size):
         if line_width > 0:
             svg.stream.set_line_width(line_width)
     if dash_array:
-        if not all(float(value) == 0 for value in dash_array) and not any(float(value) < 0 for value in dash_array):
+        if (not all(float(value) == 0 for value in dash_array) and
+            not any(float(value) < 0 for value in dash_array)):
             if offset < 0:
                 sum_dashes = sum(float(value) for value in dash_array)
                 offset = sum_dashes - abs(offset) % sum_dashes
