@@ -40,6 +40,8 @@ def fill_stroke(svg, node, font_size):
     dash_array = normalize(node.get('stroke-dasharray', '')).split()
     offset = size(node.get('stroke-dashoffset', 0))
     line_cap = node.get('stroke-linecap', 'butt')
+    line_join = node.get('stroke-linejoin', 'miter')
+    miter_limit = float(node.get('stroke-miterlimit', 4))
 
     if stroke:
         stroke_color = color(stroke)[0:-1]
@@ -59,7 +61,16 @@ def fill_stroke(svg, node, font_size):
         line_cap = 1 if line_cap == 'round' else 2
     else:
         line_cap = 0
+    if line_join in ('miter-clip', 'arc'):
+        line_join = 'miter'
+        raise NotImplementedError
+    if line_join in ('round', 'bevel'):
+        line_join = 1 if line_join == 'round' else 2
+    if line_join == 'miter':
+        line_join = 0
     svg.stream.set_line_cap(line_cap)
+    svg.stream.set_line_join(line_join)
+    svg.stream.set_miter_limit(miter_limit)
 
 
     if fill and stroke:
